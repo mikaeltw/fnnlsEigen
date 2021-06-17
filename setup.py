@@ -5,7 +5,7 @@ import os
 
 
 def get_eigen_include():
-    EIGEN = "orexplore/fnnls/thirdparty/eigen"
+    EIGEN = "thirdparty/eigen"
     DIRECTORY = os.path.dirname(os.path.realpath(__file__))
     path = os.path.join(DIRECTORY, EIGEN)
     return [path]
