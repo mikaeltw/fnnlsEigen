@@ -1,0 +1,9 @@
+*.o
+*.so
+__pycache__
+.cache
+.coverage
+htmlcov
+.idea
+.vscode
+src/eigen_fnnls.cpp
