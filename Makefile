@@ -1,4 +1,4 @@
-.PHONY: build test check clean_tomo_fnnls clean help
+.PHONY: build check clean test help
 
 PYTHON = python3
 
@@ -25,7 +25,7 @@ clean:
 	find . -depth -name "__pycache__" -exec rm -rf {} \;
 
 test:
-	pytest .
+	pytest
 
 help:
 	@echo The following targets are available:
@@ -33,7 +33,7 @@ help:
 	@echo "  build              Build everything that needs building"
 	@echo "  test               Run Python unit tests"
 	@echo "  check              Look for errors and style violations with flake8"
-	@echo "  clean   			Clean files produced during setup"
+	@echo "  clean              Clean files produced during setup"
 	@echo "  help               Show this help message"
 	@echo
 	@echo The default target is build.
