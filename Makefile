@@ -1,6 +1,6 @@
 .PHONY: build test check clean_tomo_fnnls clean help
 
-PYTHON = python
+PYTHON = python3
 
 build:
 	git submodule update --init
