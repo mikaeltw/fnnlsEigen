@@ -1,6 +1,7 @@
 #!/bin/bash -ex
 
 rm -rf env
+rm -f requirements.txt
 
 python3 -m venv env
 
