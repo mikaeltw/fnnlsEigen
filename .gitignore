@@ -7,3 +7,5 @@ htmlcov
 .idea
 .vscode
 src/eigen_fnnls.cpp
+env
+requirements.txt

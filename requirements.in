@@ -1,0 +1,6 @@
+Cython==0.29.23
+flake8==3.9.1
+matplotlib==3.4.1
+numpy==1.20.2
+pytest==6.2.3
+scipy==1.6.3

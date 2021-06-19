@@ -1,7 +1,11 @@
-from setuptools import setup, Extension
+from setuptools import find_packages, setup, Extension
 
 import numpy as np
 import os
+
+
+with open("README.md", "r") as f:
+    long_description = f.read()
 
 
 def get_eigen_include():
@@ -30,6 +34,14 @@ extra_compile_args = [
 
 
 setup(
+    name="fnnls solver",
+    version="1.0.0",
+    packages=find_packages(),
+    author="Mikael Twengström",
+    description="A fast nnls solver implemented in C++ using Eigen",
+    long_description=long_description,
+    long_description_content_type='text/markdown',
+    url="Url to the project on github",
     ext_modules=[
         Extension(
             name='eigen_fnnls',
@@ -39,5 +51,9 @@ setup(
             extra_compile_args=extra_compile_args,
             define_macros=[("NPY_NO_DEPRECATED_API", "NPY_1_7_API_VERSION")],
         ),
+    ],
+    install_requires=[
+        'numpy==1.20.2',
+        'Cython==0.29.23',
     ]
 )
