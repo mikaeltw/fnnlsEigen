@@ -18,10 +18,11 @@ clean:
 	rm -rf .coverage
 	rm -rf *.egg-info
 	rm -rf .coverage.*
+	rm -rf .pytest_cache
 	rm -f src/eigen_fnnls.cpp
-	find . -name "*.pyc" -exec rm {} \;
-	find . -name "*.o" -exec rm {} \;
-	find . -name "*.so" -exec rm {} \;
+	find . -path ./env -prune -false -o -name "*.pyc" -exec rm {} \;
+	find . -path ./env -prune -false -o -name "*.o" -exec rm {} \;
+	find . -path ./env -prune -false -o -name "*.so" -exec rm {} \;
 	find . -depth -name "__pycache__" -exec rm -rf {} \;
 
 test:
