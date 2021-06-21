@@ -1,0 +1,21 @@
+include LICENSE
+include MANIFEST.in
+include README.md
+include setup.py
+include pyproject.toml
+
+# C++-files
+include fnnlsEigen/*.h
+include fnnlsEigen/*.cpp
+
+# Cython files
+include fnnslEigen/*.pyx
+
+# Cython files
+include fnnslEigen/*.pyx
+
+# Eigen files
+prune thirdparty/eigen/
+graft thirdparty/eigen/Eigen
+include thirdparty/eigen/COPYING*
+recursive-exclude thirdparty/eigen/Eigen CMakeLists.txt

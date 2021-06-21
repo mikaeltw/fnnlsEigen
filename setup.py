@@ -33,27 +33,36 @@ extra_compile_args = [
 ]
 
 
+extension = Extension(name='fnnlsEigen',
+                      sources=['fnnlsEigen/eigen_fnnls.pyx'],
+                      language='c++',
+                      include_dirs=[np.get_include()] + get_eigen_include(),
+                      extra_compile_args=extra_compile_args,
+                      define_macros=[("NPY_NO_DEPRECATED_API", "NPY_1_7_API_VERSION")],
+                      )
+
+
 setup(
     name="fnnlsEigen",
     version="1.0.0",
     packages=find_packages(),
     author="Mikael Twengström",
+    author_email="m.twengstrom@gmail.com",
     description="A fast nnls solver for python implemented in C++ using Eigen",
     long_description=long_description,
+    license="MIT",
+    platforms="Linux",
     long_description_content_type='text/markdown',
     url="Url to the project on github",
-    ext_modules=[
-        Extension(
-            name='fnnlsEigen',
-            sources=['fnnlsEigen/eigen_fnnls.pyx'],
-            language='c++',
-            include_dirs=[np.get_include()] + get_eigen_include(),
-            extra_compile_args=extra_compile_args,
-            define_macros=[("NPY_NO_DEPRECATED_API", "NPY_1_7_API_VERSION")],
-        ),
+    ext_modules=[extension],
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: Linux",
     ],
     install_requires=[
         'numpy==1.20.2',
         'Cython==0.29.23',
-    ]
+    ],
+    python_requires=">=3.8.5",
 )

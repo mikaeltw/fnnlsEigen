@@ -6,9 +6,11 @@ __pycache__
 htmlcov
 .idea
 .vscode
+*.egg-info
 fnnlsEigen/eigen_fnnls.cpp
 env
 requirements.txt
 .pytest_cache
 include
 build
+dist
