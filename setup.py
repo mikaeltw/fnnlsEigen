@@ -53,7 +53,7 @@ setup(
     license="MIT",
     platforms="Linux",
     long_description_content_type='text/markdown',
-    url="Url to the project on github",
+    url="https://github.com/mikaeltw/fnnlsEigen",
     ext_modules=[extension],
     classifiers=[
         "Programming Language :: Python :: 3",
