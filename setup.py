@@ -34,18 +34,18 @@ extra_compile_args = [
 
 
 setup(
-    name="fnnls solver",
+    name="fnnlsEigen",
     version="1.0.0",
     packages=find_packages(),
     author="Mikael Twengström",
-    description="A fast nnls solver implemented in C++ using Eigen",
+    description="A fast nnls solver for python implemented in C++ using Eigen",
     long_description=long_description,
     long_description_content_type='text/markdown',
     url="Url to the project on github",
     ext_modules=[
         Extension(
-            name='eigen_fnnls',
-            sources=['src/eigen_fnnls.pyx'],
+            name='fnnlsEigen',
+            sources=['fnnlsEigen/eigen_fnnls.pyx'],
             language='c++',
             include_dirs=[np.get_include()] + get_eigen_include(),
             extra_compile_args=extra_compile_args,

@@ -6,7 +6,7 @@ __pycache__
 htmlcov
 .idea
 .vscode
-src/eigen_fnnls.cpp
+fnnlsEigen/eigen_fnnls.cpp
 env
 requirements.txt
 .pytest_cache
