@@ -24,11 +24,11 @@ The fnnls solver accepts both `np.float32` and `np.float64` precision `dtypes` v
 
 ``` python
 >>> import numpy as np
->>> import eigen_fnnls as ef
+>>> import fnnlsEigen as fe
 
 >>> Z = np.array([[1.0, 0.0], [0.0, 1.0], [0.5, 0.5]], dtype=np.float64)
 >>> x = np.array([1.0, 1.0, 0.0], dtype=np.float64)
->>> d = ef.fnnls(Z, x)
+>>> d = fe.fnnls(Z, x)
 >>> d
 array([0.66666667, 0.66666667])
 ```
@@ -53,9 +53,9 @@ CachePreComputeNNLS
 
 ``` python
 >>> import numpy as np
->>> import eigen_fnnls as ef
+>>> import fnnlsEigen as fe
 
->>> pc = ef.CachePreComputeNNLS()
+>>> pc = fe.CachePreComputeNNLS()
 
 >>> Z = np.abs(np.random.rand(500, 1000))
 

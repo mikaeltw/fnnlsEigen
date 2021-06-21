@@ -7,7 +7,7 @@ from scipy.optimize import nnls
 from scipy.linalg import lstsq
 import pytest
 
-from fnnlsEigen.eigen_fnnls import fnnls, fnnlsf, CachePreComputeNNLS, CachePreComputeNNLSf
+from fnnlsEigen import fnnls, fnnlsf, CachePreComputeNNLS, CachePreComputeNNLSf
 
 
 def plot_solution(Z, x, c, t, label):
