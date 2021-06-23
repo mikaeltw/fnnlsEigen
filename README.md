@@ -1,4 +1,7 @@
 # fnnlsEigen
+
+[![pypi](https://img.shields.io/pypi/v/fnnlsEigen)](https://pypi.org/project/fnnlsEigen)
+
 fnnlsEigen implements the fast non-negativity-constrained least squares algorithm (fnnls, [Link to article](https://analyticalsciencejournals.onlinelibrary.wiley.com/doi/abs/10.1002/(SICI)1099-128X(199709/10)11:5%3C393::AID-CEM483%3E3.0.CO;2-L)). The algorithm is implemented in C++ using Eigen ([Link](https://eigen.tuxfamily.org/index.php?title=Main_Page)) and is callable from Python using a Cython interface.
 
 # The nnls and the fnnls algorithms
