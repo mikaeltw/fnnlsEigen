@@ -121,7 +121,7 @@ inline VectorX_<T> fnnls_solver(const Eigen::Map<MatrixX_<T>>& ZT,
     VectorX_<T> s = VectorX_<T>::Zero(n);
     VectorX_<T> w = ZTx;
 
-    for (int iter{}; ; ++iter) {
+    for (size_t iter{}; ; ++iter) {
         if (P.all() || (w(to_indices(!P)).maxCoeff() < tolerance)) {
             break;
         } else if (iter == max_iterations) {
