@@ -8,13 +8,14 @@
 namespace fnnls {
 
 typedef Eigen::Array<bool, Eigen::Dynamic, 1> ArrayXb;
+typedef Eigen::Array<ssize_t, Eigen::Dynamic, 1> ArrayXs_t;
 template<typename T> using MatrixX_ = Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>;
 template<typename T> using VectorX_ = Eigen::Matrix<T, Eigen::Dynamic, 1>;
 template<typename T> using ArrayX_  = Eigen::Array<T, Eigen::Dynamic, 1>;
 
-inline const Eigen::ArrayXi to_indices(const Eigen::Ref<const ArrayXb>& b_array)
+inline const ArrayXs_t to_indices(const Eigen::Ref<const ArrayXb>& b_array)
 {
-    Eigen::ArrayXi indices = Eigen::ArrayXi::LinSpaced(b_array.size(), 0, b_array.size() - 1);
+    ArrayXs_t indices = ArrayXs_t::LinSpaced(b_array.size(), 0, b_array.size() - 1);
     const auto shifted_iterator = std::stable_partition(indices.data(),
                                                         indices.data() + indices.size(),
                                                         [&b_array](Eigen::Index i) {
@@ -34,11 +35,11 @@ inline const ArrayXb operator!(const Eigen::Ref<const ArrayXb>& array_b)
 }
 
 template<typename T>
-inline Eigen::ArrayXi::Index argmax_of_masked_array(const Eigen::Ref<const VectorX_<T>>& w,
+inline ArrayXs_t::Index argmax_of_masked_array(const Eigen::Ref<const VectorX_<T>>& w,
                                                     const Eigen::Ref<const ArrayXb>& P)
 {
     // The function calculates the argmax of w masked by inverted boolean array P, i.e. argmax(W * ~P).
-    Eigen::ArrayXi::Index argmax;
+    ArrayXs_t::Index argmax;
     (ArrayX_<T>::NullaryExpr(P.size(), [&w, &P](Eigen::Index i) {
         if (!P(i)) {
             return w(i);
@@ -52,7 +53,7 @@ inline Eigen::ArrayXi::Index argmax_of_masked_array(const Eigen::Ref<const Vecto
 template<typename T>
 inline VectorX_<T> least_squares_solver(const Eigen::Ref<const MatrixX_<T>>& ZTZ,
                                         const Eigen::Ref<const VectorX_<T>>& ZTx,
-                                        const Eigen::Ref<const Eigen::ArrayXi>& indices)
+                                        const Eigen::Ref<const ArrayXs_t>& indices)
 {
     return ZTZ(indices, indices).template selfadjointView<Eigen::Upper>().ldlt().solve(ZTx(indices));
 }
@@ -60,7 +61,7 @@ inline VectorX_<T> least_squares_solver(const Eigen::Ref<const MatrixX_<T>>& ZTZ
 template<typename T>
 inline T get_alpha(const Eigen::Ref<const ArrayX_<T>>& d,
                    const Eigen::Ref<const ArrayX_<T>>& s,
-                   const Eigen::Ref<const Eigen::ArrayXi>& indices)
+                   const Eigen::Ref<const ArrayXs_t>& indices)
 {
     // Please note that there is an erroneous extra minus sign in the article
     // on line C2.
@@ -69,7 +70,7 @@ inline T get_alpha(const Eigen::Ref<const ArrayX_<T>>& d,
 }
 
 template<typename T>
-inline const MatrixX_<T> construct_ZTZ(const Eigen::Ref<const Eigen::SparseMatrix<T>>& ZT_sp, const int n)
+inline const MatrixX_<T> construct_ZTZ(const Eigen::Ref<const Eigen::SparseMatrix<T>>& ZT_sp, const size_t n)
 {
     MatrixX_<T> ZTZ = MatrixX_<T>::Zero(n, n);
     ZTZ.template triangularView<Eigen::Upper>() = MatrixX_<T>(ZT_sp * ZT_sp.transpose());
@@ -80,7 +81,7 @@ inline const MatrixX_<T> construct_ZTZ(const Eigen::Ref<const Eigen::SparseMatri
 template<typename T>
 inline VectorX_<T> fnnls_solver(const Eigen::Map<MatrixX_<T>>& ZT,
                                 const Eigen::Map<VectorX_<T>>& x,
-                                int max_iterations=0,
+                                size_t max_iterations=0,
                                 T tolerance=-1.0,
                                 const T* const precompute_ptr=nullptr)
 {
@@ -89,7 +90,7 @@ inline VectorX_<T> fnnls_solver(const Eigen::Map<MatrixX_<T>>& ZT,
     // The incoming Z matrix will appear transposed in Eigen. Hence the name ZT to mimic that a Row-Major matrix
     // from Python was sent in.
 
-    const int n = ZT.rows();
+    const auto n = ZT.rows();
 
     if (ZT.cols() != x.rows()) {
         throw std::runtime_error("Mismatched sizes of data matrix ZT and target vector x: ZT size = ("
@@ -135,8 +136,8 @@ inline VectorX_<T> fnnls_solver(const Eigen::Map<MatrixX_<T>>& ZT,
                 break;
             }
             // Coefficients that are in the passive set P, but have become non-positive needs adjustment.
-            // alpha has to be larger than 0 and smaller than 1. Precision issues were alpha becomes 0 or 1
-            // for a coefficient in the passive sets has to be turned off.
+            // alpha has to be larger than 0 and smaller than 1. Precision issues where alpha becomes 0 or 1
+            // for a coefficient in the passive set has to be turned off.
             const T alpha = get_alpha<T>(d, s, to_indices(P && (s.array() < dzero)));
             d.noalias() +=  alpha * (s - d);
             P(to_indices(d.array() <= denorm_min)) = false;

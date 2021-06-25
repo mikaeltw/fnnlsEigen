@@ -32,8 +32,8 @@ class StorePreCompute
                                                     T tolerance)
         {
             const auto ZT_new = eigen_wrapper::Map<fnnls::MatrixX_<T>>(array_Z);
-            const int n_rows = ZT_new.rows();
-            const int n_cols = ZT_new.cols();
+            const auto n_rows = ZT_new.rows();
+            const auto n_cols = ZT_new.cols();
             constexpr T tone = T{1.0};
             if ((ZT_old.rows() != n_rows) || (ZT_old.cols() != n_cols) || !(ZT_old - ZT_new).isMuchSmallerThan(tone)) {
                 ZTZ.resize(n_rows, n_rows);

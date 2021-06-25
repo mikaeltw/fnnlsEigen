@@ -5,11 +5,11 @@
 fnnlsEigen implements the fast non-negativity-constrained least squares algorithm (fnnls, [Link to article](https://analyticalsciencejournals.onlinelibrary.wiley.com/doi/abs/10.1002/(SICI)1099-128X(199709/10)11:5%3C393::AID-CEM483%3E3.0.CO;2-L)). The algorithm is implemented in C++ using Eigen ([Link](https://eigen.tuxfamily.org/index.php?title=Main_Page)) and is callable from Python using a Cython interface.
 
 # The nnls and the fnnls algorithms
-The non-negative least squares algorithm finds solves the following problem for a given matrix `Z` and vector `x`:
+The non-negative least squares algorithm solves the following problem for a given matrix `Z` and vector `x`:
 
 <img src="https://render.githubusercontent.com/render/math?math=\LARGE\displaystyle\min\limits_{d\geq0}\left|\left|x-Zd\right|\right|_2">
 
-where `d` is the solution.
+where `d` is the solution vector.
 
 The fnnls algorithm in this repository is optimised for intermediary sparsed matrices and is considerably faster than e.g. SciPy's
 nnls algorithm for large matrices.
@@ -23,7 +23,7 @@ $ python3 -m pip install fnnlsEigen
 
 **Direct usage**
 
-The fnnls solver accepts both `np.float32` and `np.float64` precision `dtypes` via `fnnls` and `fnnlsf` respectively.
+The fnnls solver accepts both `np.float32` and `np.float64` precision; `dtype` via `fnnls` and `fnnlsf` respectively.
 
 ``` python
 >>> import numpy as np
@@ -41,7 +41,7 @@ Optionally, the breaking tolerance (`tolerance`) and maximum number of iteration
     max_iterations : int
         Defaults to 3 * array_Z.shape[1].
     tolerance : float32 / float64
-        Defaults to machine epsilon of float32 / float64 times columns in the given matrix.
+        Defaults to machine epsilon of float32 / float64 times #columns in the given matrix.
 ```
 
 **Batched usage**
@@ -70,7 +70,7 @@ CachePreComputeNNLS
 # Contributing
 Clone the project from github. Create a topic branch and issue a pull request for said branch. Wait for review.
 
-**Setup**
+**Setup - Linux**
 
 On Linux platforms the environment can be easily set up as follows (after entering the cloned directory):
 
@@ -99,3 +99,7 @@ and
 ``` bash
 $ make check
 ```
+
+**Setup - Windows**
+
+Windows shell scripts and setup environments for Windows is a welcomed contribution.
