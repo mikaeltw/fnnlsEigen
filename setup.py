@@ -39,7 +39,10 @@ def get_extra_compile_args():
     elif sys.platform == "win32":
         extra_compile_args = [
             '/std:c++14',
-            '/O2',
+            '/Ox',
+            '/Qfast_transcendentals',
+            '/Oy',
+            '/GA',
             '/DNDEBUG',
             '/DEIGEN_NO_DEBUG',
         ]
