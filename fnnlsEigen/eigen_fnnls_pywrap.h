@@ -28,8 +28,8 @@ class StorePreCompute
         StorePreCompute() {};
         PyArrayObject *call_fnnls_solver_precompute(PyArrayObject *array_Z,
                                                     PyArrayObject *array_x,
-                                                    int max_iterations,
-                                                    T tolerance)
+                                                    const int max_iterations,
+                                                    const T tolerance)
         {
             const auto ZT_new = eigen_wrapper::Map<fnnls::MatrixX_<T>>(array_Z);
             const auto n_rows = ZT_new.rows();

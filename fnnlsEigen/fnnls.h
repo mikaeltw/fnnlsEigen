@@ -121,10 +121,10 @@ inline VectorX_<T> fnnls_solver(const Eigen::Map<MatrixX_<T>>& ZT,
     VectorX_<T> s = VectorX_<T>::Zero(n);
     VectorX_<T> w = ZTx;
 
-    for (size_t iter{}; ; ++iter) {
+    for (int iter{}; ; ++iter) {
         if (P.all() || (w(to_indices(!P)).maxCoeff() < tolerance)) {
             break;
-        } else if (iter == max_iterations) {
+        } else if (static_cast<size_t>(iter) == max_iterations) {
             throw std::runtime_error("Solution not converged after maximum number of allowed iterations!");
         }
         const ArrayXb P_previous = P;
