@@ -8,14 +8,13 @@
 namespace fnnls {
 
 typedef Eigen::Array<bool, Eigen::Dynamic, 1> ArrayXb;
-typedef Eigen::Array<ssize_t, Eigen::Dynamic, 1> ArrayXs_t;
 template<typename T> using MatrixX_ = Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>;
 template<typename T> using VectorX_ = Eigen::Matrix<T, Eigen::Dynamic, 1>;
 template<typename T> using ArrayX_  = Eigen::Array<T, Eigen::Dynamic, 1>;
 
-inline const ArrayXs_t to_indices(const Eigen::Ref<const ArrayXb>& b_array)
+inline const Eigen::ArrayXi to_indices(const Eigen::Ref<const ArrayXb>& b_array)
 {
-    ArrayXs_t indices = ArrayXs_t::LinSpaced(b_array.size(), 0, b_array.size() - 1);
+    Eigen::ArrayXi indices = Eigen::ArrayXi::LinSpaced(b_array.size(), 0, b_array.size() - 1);
     const auto shifted_iterator = std::stable_partition(indices.data(),
                                                         indices.data() + indices.size(),
                                                         [&b_array](Eigen::Index i) {
@@ -35,11 +34,11 @@ inline const ArrayXb operator!(const Eigen::Ref<const ArrayXb>& array_b)
 }
 
 template<typename T>
-inline ArrayXs_t::Index argmax_of_masked_array(const Eigen::Ref<const VectorX_<T>>& w,
+inline Eigen::ArrayXi::Index argmax_of_masked_array(const Eigen::Ref<const VectorX_<T>>& w,
                                                     const Eigen::Ref<const ArrayXb>& P)
 {
     // The function calculates the argmax of w masked by inverted boolean array P, i.e. argmax(W * ~P).
-    ArrayXs_t::Index argmax;
+    Eigen::ArrayXi::Index argmax;
     (ArrayX_<T>::NullaryExpr(P.size(), [&w, &P](Eigen::Index i) {
         if (!P(i)) {
             return w(i);
@@ -53,7 +52,7 @@ inline ArrayXs_t::Index argmax_of_masked_array(const Eigen::Ref<const VectorX_<T
 template<typename T>
 inline VectorX_<T> least_squares_solver(const Eigen::Ref<const MatrixX_<T>>& ZTZ,
                                         const Eigen::Ref<const VectorX_<T>>& ZTx,
-                                        const Eigen::Ref<const ArrayXs_t>& indices)
+                                        const Eigen::Ref<const Eigen::ArrayXi>& indices)
 {
     return ZTZ(indices, indices).template selfadjointView<Eigen::Upper>().ldlt().solve(ZTx(indices));
 }
@@ -61,7 +60,7 @@ inline VectorX_<T> least_squares_solver(const Eigen::Ref<const MatrixX_<T>>& ZTZ
 template<typename T>
 inline T get_alpha(const Eigen::Ref<const ArrayX_<T>>& d,
                    const Eigen::Ref<const ArrayX_<T>>& s,
-                   const Eigen::Ref<const ArrayXs_t>& indices)
+                   const Eigen::Ref<const Eigen::ArrayXi>& indices)
 {
     // Please note that there is an erroneous extra minus sign in the article
     // on line C2.
@@ -70,7 +69,7 @@ inline T get_alpha(const Eigen::Ref<const ArrayX_<T>>& d,
 }
 
 template<typename T>
-inline const MatrixX_<T> construct_ZTZ(const Eigen::Ref<const Eigen::SparseMatrix<T>>& ZT_sp, const size_t n)
+inline const MatrixX_<T> construct_ZTZ(const Eigen::Ref<const Eigen::SparseMatrix<T>>& ZT_sp, const int n)
 {
     MatrixX_<T> ZTZ = MatrixX_<T>::Zero(n, n);
     ZTZ.template triangularView<Eigen::Upper>() = MatrixX_<T>(ZT_sp * ZT_sp.transpose());
@@ -81,7 +80,7 @@ inline const MatrixX_<T> construct_ZTZ(const Eigen::Ref<const Eigen::SparseMatri
 template<typename T>
 inline VectorX_<T> fnnls_solver(const Eigen::Map<MatrixX_<T>>& ZT,
                                 const Eigen::Map<VectorX_<T>>& x,
-                                size_t max_iterations=0,
+                                int max_iterations=0,
                                 T tolerance=-1.0,
                                 const T* const precompute_ptr=nullptr)
 {
@@ -124,7 +123,7 @@ inline VectorX_<T> fnnls_solver(const Eigen::Map<MatrixX_<T>>& ZT,
     for (int iter{}; ; ++iter) {
         if (P.all() || (w(to_indices(!P)).maxCoeff() < tolerance)) {
             break;
-        } else if (static_cast<size_t>(iter) == max_iterations) {
+        } else if (iter == max_iterations) {
             throw std::runtime_error("Solution not converged after maximum number of allowed iterations!");
         }
         const ArrayXb P_previous = P;
