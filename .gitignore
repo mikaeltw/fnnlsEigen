@@ -6,6 +6,7 @@ __pycache__
 htmlcov
 .idea
 .vscode
+*.pyd
 *.egg-info
 fnnlsEigen/eigen_fnnls.cpp
 env

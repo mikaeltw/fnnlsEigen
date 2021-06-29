@@ -19,7 +19,7 @@ clean:
 	rm -rf *.egg-info
 	rm -rf .coverage.*
 	rm -rf .pytest_cache
-	rm -f src/eigen_fnnls.cpp
+	rm -f fnnlsEigen/eigen_fnnls.cpp
 	find . -path ./env -prune -false -o -name "*.pyc" -exec rm {} \;
 	find . -path ./env -prune -false -o -name "*.o" -exec rm {} \;
 	find . -path ./env -prune -false -o -name "*.so" -exec rm {} \;

@@ -89,7 +89,7 @@ inline VectorX_<T> fnnls_solver(const Eigen::Map<MatrixX_<T>>& ZT,
     // The incoming Z matrix will appear transposed in Eigen. Hence the name ZT to mimic that a Row-Major matrix
     // from Python was sent in.
 
-    const int n = ZT.rows();
+    const auto n = ZT.rows();
 
     if (ZT.cols() != x.rows()) {
         throw std::runtime_error("Mismatched sizes of data matrix ZT and target vector x: ZT size = ("
@@ -135,8 +135,8 @@ inline VectorX_<T> fnnls_solver(const Eigen::Map<MatrixX_<T>>& ZT,
                 break;
             }
             // Coefficients that are in the passive set P, but have become non-positive needs adjustment.
-            // alpha has to be larger than 0 and smaller than 1. Precision issues were alpha becomes 0 or 1
-            // for a coefficient in the passive sets has to be turned off.
+            // alpha has to be larger than 0 and smaller than 1. Precision issues where alpha becomes 0 or 1
+            // for a coefficient in the passive set has to be turned off.
             const T alpha = get_alpha<T>(d, s, to_indices(P && (s.array() < dzero)));
             d.noalias() +=  alpha * (s - d);
             P(to_indices(d.array() <= denorm_min)) = false;

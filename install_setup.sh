@@ -13,4 +13,4 @@ python3 -m pip install pip-tools==6.1.0
 
 pip-compile
 
-python -m pip install -r requirements.txt
+python3 -m pip install -r requirements.txt
