@@ -1,0 +1,36 @@
+# This workflow will install Python dependencies, build the module and run test and style checks.
+
+name: Build project
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [3.7, 3.8, 3.9]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Setup virtual environment and install dependencies
+      run: |
+        ./install_setup.sh
+    - name: Source environment and set pythonpath
+      run: |
+        source env.sh
+    - name: Build module
+      run: |
+        make build
+    - name: Run tests  
+      run: |
+        make test
+    - name: Run PEP8 style check  
+      run: |
+        make check
