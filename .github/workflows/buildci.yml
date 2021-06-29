@@ -1,6 +1,7 @@
-# This workflow will install Python dependencies, build the module and run test and style checks.
+# This workflow will install Python dependencies, build the module, run tests and style checks
+# for several python versions on the latest ubuntu-release.
 
-name: Build project
+name: CI
 
 on: [push]
 
@@ -25,9 +26,9 @@ jobs:
     - name: Build module
       run: |
         . env/bin/activate; make build
-    - name: Run tests  
+    - name: Run tests
       run: |
         . env/bin/activate; make test
-    - name: Run PEP8 style check  
+    - name: Run PEP8 style check
       run: |
         . env/bin/activate; make check
