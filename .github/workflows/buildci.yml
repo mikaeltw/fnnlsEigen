@@ -22,15 +22,12 @@ jobs:
     - name: Setup virtual environment and install dependencies
       run: |
         ./install_setup.sh
-    - name: Source environment and set pythonpath
-      run: |
-        source env.sh
     - name: Build module
       run: |
-        make build
+        . env/bin/activate; make build
     - name: Run tests  
       run: |
-        make test
+        . env/bin/activate; make test
     - name: Run PEP8 style check  
       run: |
-        make check
+        . env/bin/activate; make check
