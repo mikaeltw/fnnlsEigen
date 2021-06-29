@@ -15,7 +15,7 @@ include fnnslEigen/*.pyx
 include fnnslEigen/*.pyx
 
 # Eigen files
-prune thirdparty/eigen/
+prune thirdparty/eigen
 graft thirdparty/eigen/Eigen
 include thirdparty/eigen/COPYING*
 recursive-exclude thirdparty/eigen/Eigen CMakeLists.txt
