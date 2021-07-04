@@ -3,7 +3,7 @@
 
 name: CI
 
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
   build:
@@ -35,10 +35,14 @@ jobs:
 
     - name: Run clang-format style check
       run: |
+        apt-get update
+        apt-get install -y --no-install-recommends clang-format
         . env/bin/activate; make check-clang-format
 
     - name: Run clang-tidy modernization checks
       run: |
+        apt-get update
+        apt-get install -y --no-install-recommends clang-tidy
         . env/bin/activate; make check-clang-tidy
 
     - name: Run tests
