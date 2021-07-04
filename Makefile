@@ -9,6 +9,9 @@ build:
 check:
 	flake8 .
 
+adjust-clang-style:
+	clang-format -i -style=file fnnlsEigen/*.cpp fnnlsEigen/*.h
+
 clean:
 	$(PYTHON) setup.py clean
 	rm -rf build

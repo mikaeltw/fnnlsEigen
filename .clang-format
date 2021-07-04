@@ -1,0 +1,15 @@
+---
+# C++ style enforcements
+BasedOnStyle: LLVM
+AccessModifierOffset: -4
+AlwaysBreakTemplateDeclarations: Yes
+BreakBeforeBinaryOperators: All
+BreakConstructorInitializers: BeforeColon
+ColumnLimit: 99
+IndentCaseLabels: true
+IndentPPDirectives: AfterHash
+IndentWidth: 4
+Language: Cpp
+Standard: Cpp11
+TabWidth: 4
+...
