@@ -20,15 +20,27 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
+
     - name: Setup virtual environment and install dependencies
       run: |
         ./install_setup.sh
+
     - name: Build module
       run: |
         . env/bin/activate; make build
+
+    - name: Run PEP8 style check
+      run: |
+        . env/bin/activate; make check-pep8
+
+    - name: Run clang-format style check
+      run: |
+        . env/bin/activate; make check-clang-format
+
+    - name: Run clang-tidy modernization checks
+      run: |
+        . env/bin/activate; make check-clang-tidy
+
     - name: Run tests
       run: |
         . env/bin/activate; make test
-    - name: Run PEP8 style check
-      run: |
-        . env/bin/activate; make check

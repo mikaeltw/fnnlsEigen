@@ -90,7 +90,7 @@ Compile the project:
 $ make build
 ```
 
-Tests and style checks can be accessed via:
+Tests and pep8 style checks can be accessed via:
 ``` bash
 $ make test
 ```
@@ -98,7 +98,16 @@ $ make test
 and
 
 ``` bash
-$ make check
+$ make check-pep8
+```
+
+C++ style checks and modernisations (incl. style fixup) can be accessed via
+``` bash
+$ make adjust-clang-style
+
+$ make check-clang-format
+
+$ make check-clang-tidy
 ```
 
 **Setup - Windows**
