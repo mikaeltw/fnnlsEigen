@@ -4,7 +4,7 @@ from numpy cimport ndarray as cndarray
 from numpy cimport float64_t, float32_t
 
 
-cdef extern from "eigen_fnnls_pywrap.h" namespace "fnnls_python_wrapper":
+cdef extern from "eigen_fnnls_pywrap.hpp" namespace "fnnls_python_wrapper":
     cdef cndarray call_fnnls_solver[T](cndarray array_Z,
                                        cndarray array_x,
                                        int max_iterations,
