@@ -4,4 +4,3 @@ matplotlib==3.4.1
 numpy==1.20.2
 pytest==6.2.3
 scipy==1.6.3
-clang-format==9.0.0
