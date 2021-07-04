@@ -1,7 +1,7 @@
 #pragma once
 
-#include "eigen_wrapper.h"
-#include "fnnls.h"
+#include "eigen_wrapper.hpp"
+#include "fnnls.hpp"
 
 namespace fnnls_python_wrapper {
 
@@ -20,7 +20,7 @@ private:
     fnnls::MatrixX_<T> ZTZ;
 
 public:
-    StorePreCompute(){};
+    StorePreCompute() = default;
     PyArrayObject *call_fnnls_solver_precompute(PyArrayObject *array_Z, PyArrayObject *array_x,
                                                 const int max_iterations, const T tolerance) {
         const auto ZT_new = eigen_wrapper::Map<fnnls::MatrixX_<T>>(array_Z);

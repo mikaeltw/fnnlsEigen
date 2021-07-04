@@ -3,7 +3,7 @@
 #include <Eigen/Core>
 #include <numpy/arrayobject.h>
 
-#include "fnnls.h"
+#include "fnnls.hpp"
 
 namespace eigen_wrapper {
 
@@ -29,7 +29,7 @@ inline PyArrayObject *_1darray_copy_to_numpy(const T *data_ptr, const ssize_t le
         // Something went wrong, return and let python handle the exception.
         return nullptr;
     }
-    PyArrayObject *p_array = reinterpret_cast<PyArrayObject *>(p_object);
+    auto *p_array = reinterpret_cast<PyArrayObject *>(p_object);
     std::memcpy(PyArray_DATA(p_array), data_ptr, length * sizeof(T));
     return p_array;
 }

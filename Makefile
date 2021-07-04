@@ -10,7 +10,12 @@ check:
 	flake8 .
 
 adjust-clang-style:
-	clang-format -i -style=file fnnlsEigen/*.cpp fnnlsEigen/*.h
+	clang-format -i -style=file fnnlsEigen/*.hpp
+
+run-clang-tidy:
+	clang-tidy -p . --format-style=file --extra-arg=-std=c++14 fnnlsEigen/*.hpp \
+	-- -isystem thirdparty/eigen -isystem env/lib/python3.8/site-packages/numpy/core/include \
+	-isystem `python3-config --includes`
 
 clean:
 	$(PYTHON) setup.py clean

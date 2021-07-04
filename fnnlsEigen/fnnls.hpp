@@ -7,7 +7,7 @@
 
 namespace fnnls {
 
-typedef Eigen::Array<bool, Eigen::Dynamic, 1> ArrayXb;
+using ArrayXb = Eigen::Array<bool, Eigen::Dynamic, 1>;
 template <typename T>
 using MatrixX_ = Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>;
 template <typename T>
