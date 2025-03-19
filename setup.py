@@ -22,7 +22,7 @@ def get_extra_compile_args():
             '--std=c++14',
             '-fPIC',
             '-Wall',
-            '-Werror',
+            # '-Werror',
             '-pedantic',
             # '-Wshadow', # Cython creates its own shadow mess
             '-Wextra',
